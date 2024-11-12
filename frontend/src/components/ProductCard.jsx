@@ -37,7 +37,7 @@ const ProductCard = ({ product }) => {
 					<div className='mt-2 flex items-center justify-between'>
 						<p>
 							<span className='text-3xl font-bold text-primary_text_color'>
-								₦{ product.price.toLocaleString() } {/*  Formating the price to have commas */}
+								₦{ product.price.toLocaleString() + ".00" } {/*  Formating the price to have commas */}
 							</span>
 						</p>
 					</div>

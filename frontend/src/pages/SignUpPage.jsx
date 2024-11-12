@@ -25,7 +25,7 @@ const SignUpPage = () => {
 	};
 
 	return (
-		<div className='flex flex-col justify-center py-12 px-6 md:px-8'>
+		<div className='flex flex-col justify-center py-12 px-6 md:px-8 min-h-lvh'>
 			<motion.div
 				className='sm:mx-auto sm:w-full sm:max-w-md'
 				initial={{ opacity: 0, y: -20 }}

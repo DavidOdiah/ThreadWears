@@ -1,5 +1,5 @@
 import Product from "../models/product.model.js";
-
+console
 export const getCartProducts = async (req, res) => {
     try {
         const products = await Product.find({_id:{$in:req.user.cartItems}});
@@ -48,7 +48,6 @@ export const removeAllFromCart = async (req, res) => {
             user.cartItems = user.cartItems.filter((item) => item.id !== productId);
         }
 
-        console.log(user.cartItems);
         await user.save();
         res.json(user.cartItems);
     } catch (error) {
@@ -61,11 +60,8 @@ export const updateQuantity = async (req, res) => {
     try {
         const { id: productId } = req.params;
         const { quantity } = req.body;
-        console.log(quantity);
         const user = req.user;
-        console.log(user.cartItems);
         const existingItem = user.cartItems.find((item) => item.id === productId);
-        console.log(existingItem);
 
         if (existingItem) {
             if (existingItem.quantity === 0) {

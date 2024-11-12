@@ -26,12 +26,12 @@ app.use(express.json({ limit: "10mb" })); // allows you to parse the body of the
 app.use(cookieParser());
 
 // Authentication
-app.use("/api/auth", authRoutes)
-app.use("/api/products", productRoutes)
-app.use("/api/cart", cartRoutes)
-app.use("/api/coupons", couponRoutes)
-app.use("/api/payments", paymentRoutes)
-app.use("/api/analytics", analyticsRoutes)
+app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/coupons", couponRoutes);
+app.use("/api/payments", paymentRoutes);
+app.use("/api/analytics", analyticsRoutes);
 
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "/frontend/dist")));

@@ -34,7 +34,7 @@ export const useUserStore = create((set, get) => ({
 			const res = await axios.post("/auth/login", { email, password });
 
 			set({ user: res.data, loading: false });
-			toast.success("Welcome " + res.data.name.split(" ")[0]);
+			toast.success("Welcome back " + res.data.name.split(" ")[0]);
 		} catch (error) {
 			set({ loading: false });
 			toast.error(error.response.data.message || "An error occurred");
@@ -45,7 +45,7 @@ export const useUserStore = create((set, get) => ({
 		try {
 			await axios.post("/auth/logout");
 			set({ user: null });
-			// toast.success("Logout Successful!");
+			toast.success("Logout Successful!");
 		} catch (error) {
 			toast.error(error.response?.data?.message || "An error occurred during logout");
 		}
@@ -78,8 +78,6 @@ export const useUserStore = create((set, get) => ({
 	},
 }));
 
-// TODO: Implement the axios interceptors for refreshing access token
-
 // Axios interceptor for token refresh
 let refreshPromise = null;
 
@@ -94,7 +92,7 @@ axios.interceptors.response.use(
 				// If a refresh is already in progress, wait for it to complete
 				if (refreshPromise) {
 					await refreshPromise;
-					return await axios(originalRequest);
+					return axios(originalRequest);
 				}
 
 				// Start a new refresh process
@@ -102,7 +100,7 @@ axios.interceptors.response.use(
 				await refreshPromise;
 				refreshPromise = null;
 
-				return await axios(originalRequest);
+				return axios(originalRequest);
 			} catch (refreshError) {
 				// If refresh fails, redirect to login or handle as needed
 				useUserStore.getState().logout();

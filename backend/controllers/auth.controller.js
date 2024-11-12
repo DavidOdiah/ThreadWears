@@ -17,7 +17,7 @@ const generateTokens = (userId) => {
 
 const storeRefreshToken = async (userId, refreshToken) => {
     await redis.set(`refresh_token:${userId}`, refreshToken, "EX", 7 * 24 * 60 * 60); // 7 days
-}
+};
 
 const setCookies = (res, accessToken, refreshToken) => {
     res.cookie("accessToken", accessToken, {
@@ -32,7 +32,7 @@ const setCookies = (res, accessToken, refreshToken) => {
         sameSite: "strict", // prevents CSRF attacks, cross-site request forgery attacks
         maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
-}
+};
 
 export const signup = async (req, res) => {
     try {
@@ -64,7 +64,7 @@ export const signup = async (req, res) => {
         console.log("Error in signup controller", error.message);
         res.status(500).json({ message: error.message })
     }
-}
+};
 
 export const login = async (req, res) => {
     try {
@@ -90,7 +90,7 @@ export const login = async (req, res) => {
         console.log("Error in login controller", error.message);
         res.status(500).json({ message: error.message });
     }
-}
+};
 
 export const logout = async (req, res) => {
     try {
@@ -111,7 +111,7 @@ export const logout = async (req, res) => {
         console.log("Error in logout controller", error.message);
         res.status(500).json({ message: "Server error", error: error.message })
     }
-}
+};
 
 // this will refresh the access token
 export const refreshToken = async (req, res) => {
@@ -129,7 +129,7 @@ export const refreshToken = async (req, res) => {
             return res.status(401).json({ message: "Invalid refresh token!" });
         }
 
-        const accessToken = jwt.sign({ userId: decoded.userId }, process.env.ACCESS_TOKEN_SECRET, {expiration: "15m"});
+        const accessToken = jwt.sign({ userId: decoded.userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15m" });
     
         res.cookie("accessToken", accessToken, {
             httpOnly: true, // prevents XSS attacks, cross site scripting attacks
@@ -143,7 +143,7 @@ export const refreshToken = async (req, res) => {
         console.log("Error in refreshToken controller", error.message);
         res.status(500).json({ message: "Server error", error: error.message });
     }
-}
+};
 
 export const getProfile = async (req, res) => {
     try {
@@ -151,4 +151,4 @@ export const getProfile = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Server error", error: error.message });
     }
-}
+};

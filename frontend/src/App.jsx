@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
@@ -17,12 +17,14 @@ import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
 import PurchaseCancelPage from "./pages/PurchaseCancelPage";
 import ProductPage from "./pages/ProductPage";
 import PageNotFoundPage from "./pages/PageNotFoundPage";
+import Footer from "./components/Footer";
 
 
 
 function App() {
 	const { user, checkAuth, checkingAuth } = useUserStore();
 	const { getCartItems, cart } = useCartStore();
+	const location = useLocation();
 	useEffect(() => {
 		checkAuth();
 	}, [checkAuth]);
@@ -62,6 +64,7 @@ function App() {
 					<Route path='/products/:id' element={ <ProductPage /> } />
 					<Route path='*' element={ <PageNotFoundPage /> } />
 				</Routes>
+				{(location.pathname === "/" || location.pathname.match(/^\/category\/[^/]+$/) || location.pathname.match(/^\/products\/[^/]+$/)) && <Footer />}
 			</div>
 			<Toaster />
 		</div>

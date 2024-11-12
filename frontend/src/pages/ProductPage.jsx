@@ -2,7 +2,7 @@ import PeopleAlsoBought from "../components/PeopleAlsoBought"
 import { motion } from "framer-motion"
 import { useProductStore } from "../stores/useProductStore";
 import { useParams } from 'react-router-dom';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ShoppingCart, Trash } from "lucide-react";
 import { useCartStore } from "../stores/useCartStore";
 import { useUserStore } from "../stores/useUserStore";
@@ -14,15 +14,18 @@ const ProductPage = () => {
         window.scrollTo(0, 0);
     },[])
 
+    const [isLoading, setIsLoading] = useState(true);
     const { fetchProductById, product, deleteProduct } = useProductStore();
     
     const { id } = useParams();
 
 
     useEffect(() => {
-		fetchProductById(id);
+		fetchProductById(id)
+            .then(() => setIsLoading(false));
         }, [fetchProductById, id]);
 
+        
     const { user } = useUserStore();
     const isAdmin = user?.role === "admin";
     const { addToCart } = useCartStore();
@@ -41,6 +44,10 @@ const ProductPage = () => {
         window.history.back();
         window.location.reload();
     }   
+
+    if (isLoading) {
+		return <div className="min-h-lvh">Loading...</div>;
+	}
 
     return (
         <div className='relative min-h-screen text-white overflow-hidden'>
@@ -84,12 +91,15 @@ const ProductPage = () => {
                                 <h3 className='text-left text- sm:text-xl md:text-2xl lg:text-3xl font-semibold sm:font-semibold tracking-tight text-primary_text_color mb-4 w-full'>
                                     { product.name }
                                 </h3>
+                                <h3 className='text-left text- sm:text-xl md:text-xl lg:text-2xl font-medium sm:font-semibold tracking-tight text-gray-400 mb-4 w-full'>
+                                    ₦{ product.price.toLocaleString() + ".00" }
+                                </h3>
                                 <div className="flex justify-between">
                                     <button
                                         className='flex items-center justify-center rounded-lg bg-primary_button_color px-5 py-2.5 text-center text-sm font-medium
                                         text-white hover:bg-primary_button_hover_color active:outline-offset-2 active:ring-2 active:ring-primary_color max-w-96 w-3/4'
                                         alt = "Add to cart"
-                                        onClick={ () => {handleAddToCart(product._id)}}
+                                        onClick={ () => {handleAddToCart(product)}}
                                     >
                                         <ShoppingCart size={22} className='mr-2' />
                                         <span className='hidden sm:inline ml-2'>Add to cart</span>
