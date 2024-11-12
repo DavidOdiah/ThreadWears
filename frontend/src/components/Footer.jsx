@@ -23,13 +23,13 @@ const Footer = () => {
                 <i className="fa fa-map-marker text-2xl" aria-hidden="true"></i>
                   Burj Al Arab, Dubai
                 </Link>
-                <Link to='tel:+2348142340393' className='flex items-center gap-2 hover:text-gray-400 transition ease-in-out duration-300'>
+                <Link to='tel:+2348105245417' className='flex items-center gap-2 hover:text-gray-400 transition ease-in-out duration-300'>
                 <i className="fa fa-phone text-2xl" aria-hidden="true"></i>
-                  +234-814-234-0393
+                  +234-810-524-5417
                 </Link>
-                <Link to='mailto:stunner234diamond@gmail.com' className='flex items-center gap-2 hover:text-gray-400 transition ease-in-out duration-300'>
+                <Link to='mailto:davidodiah9@gmail.com' className='flex items-center gap-2 hover:text-gray-400 transition ease-in-out duration-300'>
                 <i className="fa fa-envelope text-2xl" aria-hidden="true"></i>
-                  stunner234diamond@gmail.com
+                  davidodiah9@gmail.com
                 </Link>
             </div>
             <div className='flex flex-col flex-wrap justify-around items-center p-10 gap-6'>
